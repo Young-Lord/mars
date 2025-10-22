@@ -27,6 +27,7 @@ jobs:
         shell: pwsh
         run: |
           # 运行构建脚本
+          ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC"
           cd mars
           py .\build_windows.py --mars
       - name: Upload build artifact
