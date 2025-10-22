@@ -1,0 +1,36 @@
+name: Windows Build (VS2019)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    name: Build with VS2019
+    runs-on: windows-2019
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+  
+      - uses: ilammy/msvc-dev-cmd@v1.4.1
+
+      - name: Run build_windows.py (use VS2019)
+        shell: pwsh
+        run: |
+          # 运行构建脚本
+          cd mars
+          py .\build_windows.py --mars
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mars-windows-cmake-build
+          path: mars/cmake_build/Windows/**
